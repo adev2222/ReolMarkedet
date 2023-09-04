@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "Hr9wuS+IlfU0JE2ziZT3eaQ0PO/I8BhukyG38zbJTS5XgmotRHE14o5A8x5wLaAV/Kv75Cm1zQqWLkD6XmJuhg==",
+  "success": true,
+  "projectFilePath": "/Users/abdurahman/RiderProjects/ReolMarkedet/Domain/Domain.csproj",
+  "expectedPackageFiles": [
+    "/Users/abdurahman/.nuget/packages/microsoft.netcore.app.ref/7.0.9/microsoft.netcore.app.ref.7.0.9.nupkg.sha512",
+    "/Users/abdurahman/.nuget/packages/microsoft.aspnetcore.app.ref/7.0.9/microsoft.aspnetcore.app.ref.7.0.9.nupkg.sha512"
+  ],
+  "logs": []
+}
