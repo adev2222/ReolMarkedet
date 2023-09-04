@@ -2,7 +2,7 @@ using Domain.Entities.Common;
 
 namespace Domain.Entities;
 
-public class Contract: BaseEntity
+public class LeaseAgreements: BaseEntity
 {
     public DateTime StartDate { get; set; }
 
@@ -13,7 +13,7 @@ public class Contract: BaseEntity
     public Shelf Shelf { get; set; }
     public int ShelfId { get; set; }
 
-    public Renter Renter { get; set; }
+    public ShelfRenter ShelfRenter { get; set; }
     public int RenterId { get; set; }
     
     

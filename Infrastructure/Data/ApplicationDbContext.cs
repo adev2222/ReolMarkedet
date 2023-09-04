@@ -10,8 +10,8 @@ public class ApplicationDbContext: DbContext
     }
 
     public DbSet<Shelf> Shelves { get; set; }
-    public DbSet<Renter> Renters { get; set; }
-    public DbSet<Contract> Contracts { get; set; }
+    public DbSet<ShelfRenter> Renters { get; set; }
+    public DbSet<LeaseAgreements> Contracts { get; set; }
     
     
 }

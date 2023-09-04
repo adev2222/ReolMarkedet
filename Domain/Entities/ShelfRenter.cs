@@ -2,7 +2,7 @@ using Domain.Entities.Common;
 
 namespace Domain.Entities;
 
-public class Renter: BaseEntity
+public class ShelfRenter: BaseEntity
 {
     public string FirstName { get; set; } = string.Empty;
     public string LastName { get; set; } = string.Empty;
