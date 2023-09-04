@@ -1,6 +1,8 @@
+using Domain.Entities.Common;
+
 namespace Domain.Entities;
 
-public class Contract
+public class Contract: BaseEntity
 {
     public DateTime StartDate { get; set; }
 
