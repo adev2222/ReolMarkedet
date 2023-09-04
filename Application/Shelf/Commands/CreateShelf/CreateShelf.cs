@@ -5,7 +5,7 @@ using MediatR;
 
 namespace Application.Shelf.Commands.CreateShelf;
 
-public record CreateShelfCommand(int Id) : IRequest<int>
+public record CreateShelfCommand : IRequest<int>
 {
     public string Location { get; set; } = string.Empty;
     public ShelfType ShelfType { get; set; }

@@ -51,14 +51,15 @@ namespace Infrastructure.Migrations
                     RentDuration = table.Column<int>(type: "int", nullable: false),
                     IsPayed = table.Column<bool>(type: "bit", nullable: false),
                     ShelfId = table.Column<int>(type: "int", nullable: false),
+                    ShelfRenterId = table.Column<int>(type: "int", nullable: false),
                     RenterId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Contracts", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Contracts_Renters_RenterId",
-                        column: x => x.RenterId,
+                        name: "FK_Contracts_Renters_ShelfRenterId",
+                        column: x => x.ShelfRenterId,
                         principalTable: "Renters",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -71,14 +72,14 @@ namespace Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Contracts_RenterId",
-                table: "Contracts",
-                column: "RenterId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Contracts_ShelfId",
                 table: "Contracts",
                 column: "ShelfId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Contracts_ShelfRenterId",
+                table: "Contracts",
+                column: "ShelfRenterId");
         }
 
         /// <inheritdoc />

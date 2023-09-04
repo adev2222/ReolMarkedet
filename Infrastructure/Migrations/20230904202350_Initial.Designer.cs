@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230904180603_Initial")]
+    [Migration("20230904202350_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -25,7 +25,7 @@ namespace Infrastructure.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Domain.Entities.Contract", b =>
+            modelBuilder.Entity("Domain.Entities.LeaseAgreements", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -45,19 +45,42 @@ namespace Infrastructure.Migrations
                     b.Property<int>("ShelfId")
                         .HasColumnType("int");
 
+                    b.Property<int>("ShelfRenterId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("RenterId");
-
                     b.HasIndex("ShelfId");
+
+                    b.HasIndex("ShelfRenterId");
 
                     b.ToTable("Contracts");
                 });
 
-            modelBuilder.Entity("Domain.Entities.Renter", b =>
+            modelBuilder.Entity("Domain.Entities.Shelf", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Location")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ShelfType")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Shelves");
+                });
+
+            modelBuilder.Entity("Domain.Entities.ShelfRenter", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -86,43 +109,23 @@ namespace Infrastructure.Migrations
                     b.ToTable("Renters");
                 });
 
-            modelBuilder.Entity("Domain.Entities.Shelf", b =>
+            modelBuilder.Entity("Domain.Entities.LeaseAgreements", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Location")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("ShelfType")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Shelves");
-                });
-
-            modelBuilder.Entity("Domain.Entities.Contract", b =>
-                {
-                    b.HasOne("Domain.Entities.Renter", "Renter")
-                        .WithMany()
-                        .HasForeignKey("RenterId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Domain.Entities.Shelf", "Shelf")
                         .WithMany()
                         .HasForeignKey("ShelfId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Renter");
+                    b.HasOne("Domain.Entities.ShelfRenter", "ShelfRenter")
+                        .WithMany()
+                        .HasForeignKey("ShelfRenterId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Shelf");
+
+                    b.Navigation("ShelfRenter");
                 });
 #pragma warning restore 612, 618
         }

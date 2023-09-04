@@ -2,7 +2,7 @@ using Domain.Entities;
 
 namespace Application.Common.Repositories;
 
-public interface IContractRepository: IGenericInterface<LeaseAgreements>
+public interface IShelfRenterRepository: IGenericInterface<ShelfRenter>
 {
     
 }

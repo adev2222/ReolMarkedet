@@ -1,4 +1,6 @@
+using Application.Common.Repositories;
 using Infrastructure.Data;
+using Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -13,6 +15,11 @@ public static class DependencyInjection
         services.AddDbContext<ApplicationDbContext>(options =>
             options.UseSqlServer(configuration.GetConnectionString("SqlServer")));
         
+        
+        services.AddScoped(typeof(IGenericInterface<>), typeof(GenericRepository<>));
+        services.AddScoped<IShelfRepository, ShelfRepository>();
+        services.AddScoped<IShelfRenterRepository, ShelfRenterRepository>();
+        services.AddScoped<ILeaseAgreementsRepository, LeaseAgreementsRepository>();       
         return services;
 
     }

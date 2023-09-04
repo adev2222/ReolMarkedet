@@ -7,7 +7,7 @@ namespace Application.Shelf.Queries.GetShelfById;
 public class ShelfDto
 {
     public string Location { get; set; } = string.Empty;
-    public ShelfType ShelfType { get; set; }
+    public ShelfType ShelfType { get; set; } = ShelfType.withoutGLasses;
 
 
     private class Mapping : Profile
