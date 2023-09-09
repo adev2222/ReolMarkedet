@@ -8,7 +8,7 @@ namespace Application.Shelf.Commands.CreateShelf;
 public record CreateShelfCommand : IRequest<int>
 {
     public string Location { get; set; } = string.Empty;
-    public ShelfType ShelfType { get; set; }
+    public ShelfType ShelfType { get; set; } = ShelfType.withoutGLasses;
 }
 
 public class CreateShelfCommandHandler : IRequestHandler<CreateShelfCommand, int>

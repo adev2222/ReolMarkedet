@@ -11,7 +11,7 @@ public class ApplicationDbContext: DbContext
 
     public DbSet<Shelf> Shelves { get; set; }
     public DbSet<ShelfRenter> Renters { get; set; }
-    public DbSet<LeaseAgreements> Contracts { get; set; }
+    public DbSet<LeaseAgreement> Contracts { get; set; }
     
     
 }

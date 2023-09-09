@@ -7,10 +7,10 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <Folder Include="Email\" />
       <Folder Include="LeaseAgreements\Commands\" />
       <Folder Include="LeaseAgreements\Queries\" />
       <Folder Include="ShelfRenter\Commands\" />
-      <Folder Include="ShelfRenter\Queries\" />
     </ItemGroup>
 
     <ItemGroup>

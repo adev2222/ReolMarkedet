@@ -2,7 +2,7 @@ using Domain.Entities.Common;
 
 namespace Domain.Entities;
 
-public class LeaseAgreements: BaseEntity
+public class LeaseAgreement: BaseEntity
 {
     public DateTime StartDate { get; set; }
 

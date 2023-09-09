@@ -19,7 +19,7 @@ public static class DependencyInjection
         services.AddScoped(typeof(IGenericInterface<>), typeof(GenericRepository<>));
         services.AddScoped<IShelfRepository, ShelfRepository>();
         services.AddScoped<IShelfRenterRepository, ShelfRenterRepository>();
-        services.AddScoped<ILeaseAgreementsRepository, LeaseAgreementsRepository>();       
+        services.AddScoped<ILeaseAgreementRepository, LeaseAgreementRepository>();       
         return services;
 
     }

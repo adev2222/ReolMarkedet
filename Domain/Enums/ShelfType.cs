@@ -2,6 +2,6 @@ namespace Domain.Enums;
 
 public enum ShelfType
 {
-    withGLasses,
-    withoutGLasses
+    withGLasses = 100,
+    withoutGLasses = 150,
 }
