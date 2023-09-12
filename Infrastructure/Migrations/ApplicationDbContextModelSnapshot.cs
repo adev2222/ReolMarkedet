@@ -22,7 +22,7 @@ namespace Infrastructure.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Domain.Entities.LeaseAgreements", b =>
+            modelBuilder.Entity("Domain.Entities.LeaseAgreement", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -39,9 +39,6 @@ namespace Infrastructure.Migrations
                     b.Property<int>("RenterId")
                         .HasColumnType("int");
 
-                    b.Property<int>("ShelfId")
-                        .HasColumnType("int");
-
                     b.Property<int>("ShelfRenterId")
                         .HasColumnType("int");
 
@@ -49,8 +46,6 @@ namespace Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ShelfId");
 
                     b.HasIndex("ShelfRenterId");
 
@@ -90,15 +85,12 @@ namespace Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FirstName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Phone")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -106,23 +98,45 @@ namespace Infrastructure.Migrations
                     b.ToTable("Renters");
                 });
 
-            modelBuilder.Entity("Domain.Entities.LeaseAgreements", b =>
+            modelBuilder.Entity("LeaseAgreementShelf", b =>
                 {
-                    b.HasOne("Domain.Entities.Shelf", "Shelf")
-                        .WithMany()
-                        .HasForeignKey("ShelfId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Property<int>("LeaseAgreementsId")
+                        .HasColumnType("int");
 
+                    b.Property<int>("ShelfId")
+                        .HasColumnType("int");
+
+                    b.HasKey("LeaseAgreementsId", "ShelfId");
+
+                    b.HasIndex("ShelfId");
+
+                    b.ToTable("LeaseAgreementShelf");
+                });
+
+            modelBuilder.Entity("Domain.Entities.LeaseAgreement", b =>
+                {
                     b.HasOne("Domain.Entities.ShelfRenter", "ShelfRenter")
                         .WithMany()
                         .HasForeignKey("ShelfRenterId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Shelf");
-
                     b.Navigation("ShelfRenter");
+                });
+
+            modelBuilder.Entity("LeaseAgreementShelf", b =>
+                {
+                    b.HasOne("Domain.Entities.LeaseAgreement", null)
+                        .WithMany()
+                        .HasForeignKey("LeaseAgreementsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.Shelf", null)
+                        .WithMany()
+                        .HasForeignKey("ShelfId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }
