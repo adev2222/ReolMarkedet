@@ -1,6 +1,6 @@
-namespace Application.ShelfRenter.Queries;
+namespace Application.ShelfRenter.Queries.GetShelfRenterById;
 
-public class ShelfRentersDto
+public class ShelfRenterByIdDto
 {
     public string FirstName { get; set; } = string.Empty;
     public string LastName { get; set; } = string.Empty;

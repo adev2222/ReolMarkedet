@@ -8,9 +8,9 @@
 
     <ItemGroup>
       <Folder Include="Email\" />
-      <Folder Include="LeaseAgreements\Commands\" />
-      <Folder Include="LeaseAgreements\Queries\" />
-      <Folder Include="ShelfRenter\Commands\" />
+      <Folder Include="LeaseAgreement\Commands\DeleteLeaseAgreement\" />
+      <Folder Include="LeaseAgreement\Commands\UpdateLeaseAgreement\" />
+      <Folder Include="LeaseAgreement\Queries\" />
     </ItemGroup>
 
     <ItemGroup>
