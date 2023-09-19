@@ -5,9 +5,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repositories;
 
-public class GenericRepository<T> : IGenericInterface<T> where T : BaseEntity
+public class GenericRepository<T> : IGenericInterface<T> where T : class
 {
-    private readonly ApplicationDbContext _context;
+    private protected readonly ApplicationDbContext _context;
 
     public GenericRepository(ApplicationDbContext context)
     {
@@ -20,11 +20,9 @@ public class GenericRepository<T> : IGenericInterface<T> where T : BaseEntity
             .ToListAsync();
     }
 
-    public async Task<T> GetByIdAsync(int id)
+    public async Task<T?> GetByIdAsync(int id)
     {
-        return await _context.Set<T>()
-            .AsNoTracking()
-            .FirstOrDefaultAsync(q => q.Id == id);
+        return await _context.Set<T>().FindAsync(id);
     }
 
     public async Task CreateAsync(T entity)

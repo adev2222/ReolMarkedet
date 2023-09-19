@@ -11,9 +11,11 @@ public class LeaseAgreement: BaseEntity
 
     public bool IsPayed { get; set; } = false;
 
-    public List<Shelf> Shelf { get; set; } = new();
-
+    public double Price { get; set; }
+    
     public ShelfRenter ShelfRenter { get; set; }
-    public int RenterId { get; set; }
+    public int ShelfRenterId { get; set; }
+    
+    public List<ShelfLeaseAgreement> ShelfLeaseAgreements { get; set; }
     
 }
