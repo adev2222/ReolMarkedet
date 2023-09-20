@@ -1,6 +1,7 @@
 using Application.Common.Repositories;
 using Domain.Entities;
 using Domain.Enums;
+using FluentValidation;
 using MediatR;
 
 namespace Application.LeaseAgreement.Commands.CreateLeaseAgreement;
@@ -40,6 +41,13 @@ public class CreateLeaseAgreementCommandHandler : IRequestHandler<CreateLeaseAgr
     
     public async Task<int> Handle(CreateLeaseAgreementCommand leaseAgreementDto, CancellationToken cancellationToken)
     {
+        var validator = new CreateLeaseAgreementValidator();
+        var validationResult = await validator.ValidateAsync(leaseAgreementDto, cancellationToken);
+
+        if (validationResult.Errors.Any())
+        {
+            throw new ValidationException(validationResult.Errors);
+        }
         
         
         var shelfRenter = await _shelfRenterRepository.FindByEmailOrCreate(leaseAgreementDto.Email);
