@@ -1,6 +1,7 @@
 using Application.Common.Repositories;
 using Domain.Entities;
 using Domain.Enums;
+using FluentValidation;
 using MediatR;
 
 namespace Application.LeaseAgreement.Commands.CreateLeaseAgreement;
@@ -13,6 +14,8 @@ public record CreateLeaseAgreementCommand: IRequest<int>
     public int RentDuration { get; set; }
     
     public double Price { get; set; }
+    
+    public int ShelfCount { get; set; } = 1;
 
     public ShelfType ShelfType { get; set; } = ShelfType.withoutGLasses;
     public string Email { get; set; }
@@ -38,14 +41,14 @@ public class CreateLeaseAgreementCommandHandler : IRequestHandler<CreateLeaseAgr
     
     public async Task<int> Handle(CreateLeaseAgreementCommand leaseAgreementDto, CancellationToken cancellationToken)
     {
-        
-        var shelf = await _shelfRepository.GetByDateTime(leaseAgreementDto.StartDate) ??
-                   throw new Exception("Could not find available shelf");
-        
-        shelf.BookingEndDate = leaseAgreementDto.StartDate.AddDays(leaseAgreementDto.RentDuration * 7);
-        
-        await _shelfRepository.UpdateAsync(shelf);
+        var validator = new CreateLeaseAgreementValidator();
+        var validationResult = await validator.ValidateAsync(leaseAgreementDto, cancellationToken);
 
+        if (validationResult.Errors.Any())
+        {
+            throw new ValidationException(validationResult.Errors);
+        }
+        
         
         var shelfRenter = await _shelfRenterRepository.FindByEmailOrCreate(leaseAgreementDto.Email);
      
@@ -56,15 +59,29 @@ public class CreateLeaseAgreementCommandHandler : IRequestHandler<CreateLeaseAgr
             ShelfRenterId = shelfRenter.Id,
             Price = leaseAgreementDto.Price,
         };
-        
 
         await _leaseAgreementRepository.CreateAsync(leaseAgreement);
-
-         await _leaseAgreementShelf.CreateAsync(new ShelfLeaseAgreement
+        
+        
+        for (var i = 0; i < leaseAgreementDto.ShelfCount; i++)
         {
-             LeaseAgreementId = leaseAgreement.Id,
-             ShelfId = shelf.Id,
-         });
+            var shelf = await _shelfRepository.GetByDateTime(leaseAgreementDto.StartDate) ??
+                        throw new Exception("Could not find available shelf");
+            
+            shelf.BookingEndDate = leaseAgreementDto.StartDate.AddDays(leaseAgreementDto.RentDuration * 7);
+        
+            await _shelfRepository.UpdateAsync(shelf);
+            
+            await _leaseAgreementShelf.CreateAsync(new ShelfLeaseAgreement
+            {
+                LeaseAgreementId = leaseAgreement.Id,
+                ShelfId = shelf.Id,
+            });
+
+        }
+
+
+
 
         return leaseAgreement.Id;
     }
